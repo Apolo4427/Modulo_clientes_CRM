@@ -4,8 +4,9 @@ namespace ClientesCRM.src.Core.Interfaces.IRepositories
 {
     public interface IClienteRepository
     {
-        public Task Add(ClienteCreateDto cliente, CancellationToken ct = default);
-        public Task<ClienteResponseDto> GetCliente(Guid id, CancellationToken ct = default);
-        // public Task<ClienteUpdateDto> UpdateCliente(Guid id, )
+        public Task<Guid id> Add(Cliente cliente, CancellationToken ct = default);
+        public Task<Cliente> GetClienteById(Guid id, CancellationToken ct = default);
+        public Task<Guid id> UpdateCliente(Cliente cliente,  CancellationToken ct = default);
+        public Task<Guid id> DeleteClienteById(Guid id, CancellationToken ct = default);
     }
 }

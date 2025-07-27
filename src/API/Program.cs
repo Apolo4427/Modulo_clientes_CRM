@@ -5,7 +5,13 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
-builder.Services.AddDbContext<ClientesDbContext>();
+
+// Context
+builder.Services.AddDbContext<ClientesDbContext>( options => {
+    options.UseSqlServer(cfg =>{
+        builder.Configuration.GetConnectionString("DefaultConnection");
+    })
+});
 
 var app = builder.Build();
 
