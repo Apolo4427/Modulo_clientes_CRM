@@ -1,0 +1,27 @@
+# Directorios de compilación
+bin/
+obj/
+
+# Archivos de usuario y configuración de Visual Studio
+.vs/ 
+*.suo
+*.user
+
+# Paquetes NuGet (si usas el formato PackageFolder)
+# packages/ # Descomenta si tu proyecto todavía usa el formato packages.config y genera esta carpeta
+
+# Archivos de caché de .NET
+.dotnet/
+*.apphost
+*.pdb
+
+# Archivos de caché del IDE (VS Code)
+.vscode/
+
+# Archivos de caché específicos del sistema operativo
+.DS_Store # macOS
+Thumbs.db # Windows
+
+# Archivos de logging/temp que puedan generarse
+*.log
+*.tmp
