@@ -1,4 +1,4 @@
-namespace ClientesCRM.src.Application.ApplicationDTOs
+namespace ClientesCRM.src.Application.ApplicationDTOs.ClienteDTOs
 {
     public class ClienteCreateDto
     {

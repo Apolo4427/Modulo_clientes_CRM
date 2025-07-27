@@ -1,4 +1,5 @@
 using ClientesCRM.src.Core.Entities;
+using ClientesCRM.src.Infrastructure.Data.ConfigContext;
 using Microsoft.EntityFrameworkCore;
 
 namespace ClientesCRM.src.Infrastructure.Data
@@ -11,6 +12,10 @@ namespace ClientesCRM.src.Infrastructure.Data
         public DbSet<Propiedad> Propiedades { get; set; }
         public DbSet<Proyecto> Proyectos { get; set; }
 
-        // TODO: registrar configuraciones para la base de datos
+        protected void OModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(ClienteConfigContext).Assembly);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(PropiedadConfigContext).Assembly);
+        }
     }
 }

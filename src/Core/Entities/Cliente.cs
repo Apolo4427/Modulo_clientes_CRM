@@ -3,7 +3,8 @@ namespace ClientesCRM.src.Core.Entities
     public class Cliente
     {
         public Guid Id { get; private set; }
-        public string NombreCompleto { get; private set; }
+        public string  Nombre { get; private set; }
+        public string Apellido { get; private set; }
         public string Telefono { get; private set; }
         public string CorreoElectronico { get; private set; }
         public string DireccionPrincipal { get; private set; }
@@ -13,9 +14,10 @@ namespace ClientesCRM.src.Core.Entities
         public ICollection<Propiedad> Propiedades { get; private set; } = new List<Propiedad>();
         // public ICollection<Comunicacion> Comunicaciones { get; private set; } = new List<Comunicacion>();
 
-        public Cliente(string nombreCompleto, string telefono, string correoElectronico, string direccionPrincipal, string notasGenerales)
+        public Cliente(string nombre, string apellido, string telefono, string correoElectronico, string direccionPrincipal, string notasGenerales)
         {
-            NombreCompleto = nombreCompleto;
+            Nombre = nombre;
+            Apellido = apellido;
             Telefono = telefono;
             CorreoElectronico = correoElectronico;
             DireccionPrincipal = direccionPrincipal;
