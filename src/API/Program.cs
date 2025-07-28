@@ -17,11 +17,16 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
 // AutoMapper
-builder.Services.AddAutoMapper(typeof(MapperProfile).Assembly);
+builder.Services.AddAutoMapper(
+    cfg =>
+    {
+        cfg.AddProfile<MapperProfile>();
+    }
+);
 
 // Mediador, usaremos MediatR
 builder.Services.AddMediatR(cfg =>
-    cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+    cfg.RegisterServicesFromAssemblyContaining<ClienteCreateHandler>());
 
 // QueryHandler TODO: cambiar esto por la implementacion del MediatR
 builder.Services.AddScoped<IGetClienteByIdHandler, GetClienteByIdHandler>();
