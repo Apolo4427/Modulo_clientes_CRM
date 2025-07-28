@@ -1,17 +1,42 @@
+using System.Reflection;
+using ClientesCRM.src.Application.AutoMapper;
+using ClientesCRM.src.Application.Handlers.ClienteHandlers;
+using ClientesCRM.src.Core.Interfaces.IQueries.IClienteQueries;
+using ClientesCRM.src.Core.Interfaces.IRepositories;
 using ClientesCRM.src.Infrastructure.Data;
+using ClientesCRM.src.Infrastructure.Persistence.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+builder.Services.AddOpenApi(); // cambiar por swagger para la documentacion
+
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+
+// AutoMapper
+builder.Services.AddAutoMapper(typeof(MapperProfile).Assembly);
+
+// Mediador, usaremos MediatR
+builder.Services.AddMediatR(cfg =>
+    cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+
+// QueryHandler TODO: cambiar esto por la implementacion del MediatR
+builder.Services.AddScoped<IGetClienteByIdHandler, GetClienteByIdHandler>();
+
+// Rpository
+builder.Services.AddScoped<IClienteRepository, ClienteRepository>();
+
 
 // Context
-builder.Services.AddDbContext<ClientesDbContext>( options => {
-    options.UseSqlServer(cfg =>{
-        builder.Configuration.GetConnectionString("DefaultConnection");
-    })
-});
+builder.Services.AddDbContext<ClientesDbContext>(options =>
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("DefaultConnection")
+    )
+);
+
 
 var app = builder.Build();
 
@@ -23,6 +48,6 @@ var app = builder.Build();
 
 app.UseHttpsRedirection();
 
-
+app.MapControllers();
 
 app.Run();
