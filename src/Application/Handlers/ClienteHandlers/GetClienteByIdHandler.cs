@@ -1,22 +1,26 @@
 using ClientesCRM.src.Core.Entities;
 using ClientesCRM.src.Core.Interfaces.IQueries.IClienteQueries;
-using ClientesCRM.src.Core.Interfaces.IRepositories;
+using ClientesCRM.src.Infrastructure.Data;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
 
-namespace ClientesCRM.src.Application.Handlers.ClienteHandlers
+public class GetClienteByIdHandler 
+    : IRequestHandler<GetClienteByIdQuery, Cliente>  
 {
-    public class GetClienteByIdHandler : IGetClienteByIdHandler
+    private readonly ClientesDbContext _ctx;
+    public GetClienteByIdHandler(ClientesDbContext ctx) => _ctx = ctx;
+
+    public async Task<Cliente> Handle(GetClienteByIdQuery query, CancellationToken cancellationToken)
     {
-        private readonly IClienteRepository _repo;
+        var cliente = await _ctx.Clientes
+                                 .AsNoTracking()
+                                 .FirstOrDefaultAsync(c => c.Id == query.Id, cancellationToken);
 
-        public GetClienteByIdHandler(IClienteRepository repo)
-        {
-            _repo = repo;
-        }
+        if (cliente is null)
+            throw new KeyNotFoundException($"No se encontró un cliente con Id = {query.Id}");
 
-        public async Task<Cliente> HandleAsync(GetClienteByIdQuery query)
-        {
-            return await _repo.GetClienteById(query.Id);
-        }
+        return cliente;
     }
 }
+
 

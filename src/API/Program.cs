@@ -29,7 +29,7 @@ builder.Services.AddMediatR(cfg =>
     cfg.RegisterServicesFromAssemblyContaining<ClienteCreateHandler>());
 
 // QueryHandler TODO: cambiar esto por la implementacion del MediatR
-builder.Services.AddScoped<IGetClienteByIdHandler, GetClienteByIdHandler>();
+// builder.Services.AddScoped<IGetClienteByIdHandler, GetClienteByIdHandler>();
 
 // Rpository
 builder.Services.AddScoped<IClienteRepository, ClienteRepository>();
@@ -42,8 +42,14 @@ builder.Services.AddDbContext<ClientesDbContext>(options =>
     )
 );
 
-
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<ClientesDbContext>();
+    // Creaamos la base de datos
+    db.Database.EnsureCreated();
+}
 
 // Configure the HTTP request pipeline.
 // if (app.Environment.IsDevelopment())

@@ -9,6 +9,7 @@ namespace ClientesCRM.src.Core.Entities
         public string Calle { get; private set; }
         public StateCity Estado { get; private set; }
         public int CodigoZip { get; private set; }
+        protected Propiedad() { }
 
         public Propiedad(Guid ClienteId, string Calle, StateCity stateCity, int CodigoZip)
         {

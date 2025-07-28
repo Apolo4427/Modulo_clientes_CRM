@@ -26,7 +26,7 @@ namespace ClientesCRM.src.API.Controllers
         public async Task<ActionResult<ClienteResponseDto>> GetById(Guid id)
         {
             
-            var cliente = await _mediator.Send(new GetClienteByIdQuery(id));  
+            var cliente = await _mediator.Send(new GetClienteByIdQuery(id));
 
             var dto = _mapper.Map<ClienteResponseDto>(cliente);               
 

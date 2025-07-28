@@ -18,10 +18,10 @@ namespace ClientesCRM.src.Infrastructure.Data.ConfigContext
             e.Property(c => c.DireccionPrincipal).HasMaxLength(200);
             e.Property(c => c.NotasGenerales).HasMaxLength(1000);
 
-            e.HasMany(c => c.Propiedades)
-             .WithOne()
-             .HasForeignKey(p => p.ClienteId)
-             .OnDelete(DeleteBehavior.Cascade);
+            // e.HasMany(c => c.Propiedades)
+            //  .WithOne()
+            //  .HasForeignKey(p => p.ClienteId)
+            //  .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

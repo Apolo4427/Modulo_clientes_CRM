@@ -11,9 +11,10 @@ namespace ClientesCRM.src.Core.Entities
         public string NotasGenerales { get; private set; }
 
         // Relaciones
-        public ICollection<Propiedad> Propiedades { get; private set; } = new List<Propiedad>();
-        // public ICollection<Comunicacion> Comunicaciones { get; private set; } = new List<Comunicacion>();
+        // public ICollection<Propiedad> Propiedades { get; private set; } = new List<Propiedad>();
+        // public ICollection<Comunicacion> Comunicaciones { get; private set; } = new List<Comunicacion>(); // 
 
+        protected Cliente() { } // para EF
         public Cliente(string nombre, string apellido, string telefono, string correoElectronico, string direccionPrincipal, string notasGenerales)
         {
             Nombre = nombre;
@@ -35,8 +36,8 @@ namespace ClientesCRM.src.Core.Entities
         public void AgregarNota(string nota)
             => NotasGenerales += Environment.NewLine + nota;
 
-        public void AgregarPropiedad(Propiedad propiedad)
-            => Propiedades.Add(propiedad);
+        // public void AgregarPropiedad(Propiedad propiedad)
+        //     => Propiedades.Add(propiedad);
 
         // public void AgregarComunicacion(Comunicacion comunicacion)
         //     => Comunicaciones.Add(comunicacion);

@@ -1,7 +1,7 @@
-namespace ClientesCRM.src.Core.Entities
-{
-    public class Proyecto
-    {
+// namespace ClientesCRM.src.Core.Entities
+// {
+//     public class Proyecto
+//     {
         
-    }
-}
+//     }
+// }
