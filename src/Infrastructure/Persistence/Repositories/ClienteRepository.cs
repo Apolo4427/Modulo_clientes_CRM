@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ClientesCRM.src.Infrastructure.Persistence.Repositories
 {
-    public class ClienteRepository : IClienteRepository 
+    public class ClienteRepository : IClienteRepository
     {
         private ClientesDbContext _ctx;
 
@@ -27,6 +27,11 @@ namespace ClientesCRM.src.Infrastructure.Persistence.Repositories
                 ?? throw new KeyNotFoundException($"El cliente con id: {id} no ha sido encontrado");
         }
 
+        public async Task<IReadOnlyList<Cliente>> GetAllAsync(CancellationToken ct = default)
+        {
+            return await _ctx.Clientes.AsNoTracking().ToListAsync(ct);
+        }
+
         public async Task<Cliente> UpdateCliente(Cliente cliente, CancellationToken ct = default)
         {
             _ctx.Clientes.Update(cliente);
@@ -36,7 +41,7 @@ namespace ClientesCRM.src.Infrastructure.Persistence.Repositories
 
         public async Task<Guid> DeleteClienteById(Guid id, CancellationToken ct = default)
         {
-            var cliente = await _ctx.Clientes.FindAsync(new object[] {id}, ct) 
+            var cliente = await _ctx.Clientes.FindAsync(new object[] { id }, ct)
                 ?? throw new KeyNotFoundException($"El cliente con id: {id} no se ha encontrado");
 
             _ctx.Clientes.Remove(cliente);

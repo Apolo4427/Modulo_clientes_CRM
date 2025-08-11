@@ -1,25 +1,31 @@
+using AutoMapper;
+using ClientesCRM.src.Application.ApplicationDTOs.ClienteDTOs;
+using ClientesCRM.src.Application.Queries.ClienteQueries;
 using ClientesCRM.src.Core.Entities;
-using ClientesCRM.src.Core.Interfaces.IQueries.IClienteQueries;
-using ClientesCRM.src.Infrastructure.Data;
+using ClientesCRM.src.Core.Interfaces.IRepositories;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 public class GetClienteByIdHandler 
-    : IRequestHandler<GetClienteByIdQuery, Cliente>  
+    : IRequestHandler<GetClienteByIdQuery, ClienteResponseDto>  
 {
-    private readonly ClientesDbContext _ctx;
-    public GetClienteByIdHandler(ClientesDbContext ctx) => _ctx = ctx;
-
-    public async Task<Cliente> Handle(GetClienteByIdQuery query, CancellationToken cancellationToken)
+    private readonly IClienteRepository _repo;
+    private readonly IMapper _mapper;
+    public GetClienteByIdHandler(IClienteRepository repo, IMapper mapper)
     {
-        var cliente = await _ctx.Clientes
-                                 .AsNoTracking()
-                                 .FirstOrDefaultAsync(c => c.Id == query.Id, cancellationToken);
+        _repo = repo;
+        _mapper = mapper;
+    }
+
+    public async Task<ClienteResponseDto> Handle(GetClienteByIdQuery query, CancellationToken cancellationToken)
+    {
+        var cliente = await _repo.GetClienteById(query.Id, cancellationToken);
 
         if (cliente is null)
             throw new KeyNotFoundException($"No se encontró un cliente con Id = {query.Id}");
 
-        return cliente;
+        var dto = _mapper.Map<ClienteResponseDto>(cliente);
+
+        return dto;
     }
 }
 

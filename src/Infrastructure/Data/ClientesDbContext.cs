@@ -16,6 +16,7 @@ namespace ClientesCRM.src.Infrastructure.Data
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ClienteConfigContext).Assembly);
             // modelBuilder.ApplyConfigurationsFromAssembly(typeof(PropiedadConfigContext).Assembly);
+            base.OnModelCreating(modelBuilder);
         }
     }
 }
